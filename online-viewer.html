@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>View PDF Online</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 0;
+            padding: 20px;
+            text-align: center;
+        }
+        h1 {
+            color: #2c3e50;
+        }
+        .container {
+            max-width: 800px;
+            margin: 0 auto;
+        }
+        .download-button {
+            display: inline-block;
+            background-color: #3498db;
+            color: white;
+            padding: 10px 20px;
+            margin: 20px 0;
+            text-decoration: none;
+            border-radius: 5px;
+        }
+        .instructions {
+            text-align: left;
+            background-color: #f8f9fa;
+            padding: 20px;
+            margin-top: 20px;
+            border-radius: 5px;
+        }
+    </style>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.9.3/html2pdf.bundle.min.js"></script>
+</head>
+<body>
+    <div class="container">
+        <h1>Home Automation Systems Comparison</h1>
+        
+        <button id="generatePDF" class="download-button">Generate and Download PDF</button>
+        
+        <div class="instructions">
+            <h3>Instructions</h3>
+            <p>Click the blue button above to generate the PDF directly in your browser. This method works even if the GitHub Pages site isn't yet active.</p>
+            
+            <h3>Alternative Method</h3>
+            <p>If you prefer to view the document without downloading:</p>
+            <ol>
+                <li>Go to <a href="https://github.com/Brunai2013/home-automation-comparison/blob/main/index.html">the index.html file</a></li>
+                <li>Click on "Raw" at the top of the file content</li>
+                <li>Save the page (Ctrl+S or Cmd+S) to your computer and open it in your browser</li>
+            </ol>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('generatePDF').addEventListener('click', function() {
+            // Redirect to a PDF generation service with the raw HTML
+            window.location.href = 'https://github.com/Brunai2013/home-automation-comparison/raw/main/index.html';
+            
+            // Alternatively, inform the user
+            alert('Click "Save as" when the raw HTML loads to save it to your computer, then open it in your browser to view the formatted comparison.');
+        });
+    </script>
+</body>
+</html>
