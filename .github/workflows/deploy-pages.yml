@@ -1,0 +1,65 @@
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [ main ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v2
+      
+      - name: Set up Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: '16'
+          
+      - name: Install Puppeteer
+        run: npm install puppeteer
+        
+      - name: Create PDF
+        run: |
+          cat > convert.js <<'EOL'
+          const puppeteer = require('puppeteer');
+          const fs = require('fs');
+          const path = require('path');
+
+          (async () => {
+            const browser = await puppeteer.launch({
+              headless: 'new',
+              args: ['--no-sandbox']
+            });
+            const page = await browser.newPage();
+            
+            // Read the HTML file
+            const htmlPath = path.join(process.cwd(), 'index.html');
+            const html = fs.readFileSync(htmlPath, 'utf8');
+            
+            await page.setContent(html, { waitUntil: 'networkidle0' });
+            
+            // Generate PDF
+            await page.pdf({
+              path: 'home-automation-systems-comparison.pdf',
+              format: 'A4',
+              printBackground: true,
+              margin: {
+                top: '20px',
+                right: '20px',
+                bottom: '20px',
+                left: '20px'
+              }
+            });
+            
+            await browser.close();
+            console.log('PDF created successfully!');
+          })();
+          EOL
+          node convert.js
+          
+      - name: Deploy to GitHub Pages
+        uses: JamesIves/github-pages-deploy-action@4.1.4
+        with:
+          branch: gh-pages
+          folder: .
+          clean: true
